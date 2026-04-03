@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VENTBUDDY | TRANSMISSION</title>
+    <style>
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        #portal { max-width: 450px; width: 90%; padding: 40px; border: 1px solid #1a1a1a; border-radius: 24px; text-align: center; box-shadow: 0 10px 50px rgba(0,0,0,0.9); }
+        h1 { letter-spacing: 10px; font-weight: 200; margin-bottom: 5px; font-size: 24px; }
+        p.subtitle { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 40px; }
+        label { display: block; text-align: left; font-size: 9px; color: #666; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+        textarea, input { width: 100%; background: #050505; border: 1px solid #222; color: #fff; border-radius: 12px; padding: 15px; margin-bottom: 25px; outline: none; box-sizing: border-box; transition: 0.3s; }
+        textarea:focus, input:focus { border-color: #fff; }
+        button { width: 100%; background: #fff; color: #000; border: none; padding: 20px; border-radius: 50px; font-weight: bold; cursor: pointer; letter-spacing: 3px; text-transform: uppercase; transition: 0.4s; font-size: 13px; }
+        button:hover { transform: scale(1.02); background: #f0f0f0; }
+        button:disabled { background: #333; color: #666; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<div id="portal">
+    <h1>VENTBUDDY</h1>
+    <p class="subtitle">Direct Transmission Protocol</p>
+
+    <form id="ventForm" action="https://formspree.io/f/xlgopwaz" method="POST">
+        <label>1. The Frequency (Your Vent)</label>
+        <textarea name="Vent_Content" required placeholder="Release what is heavy..." style="resize: none; height: 180px;"></textarea>
+        
+        <label>2. Your Identity (@Instagram)</label>
+        <input type="text" name="IG_Handle" required placeholder="@yourhandle">
+        
+        <label>3. Return Path (Email)</label>
+        <input type="email" name="User_Email" required placeholder="email@address.com">
+
+        <button type="submit" id="submitBtn">I RELEASE THIS ENERGY</button>
+    </form>
+</div>
+
+<script>
+  const form = document.getElementById('ventForm');
+  const btn = document.getElementById('submitBtn');
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    btn.innerHTML = "TRANSMITTING...";
+    btn.disabled = true;
+
+    try {
+        await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        });
+        alert("Energy acknowledged. Patience is key and if luck is on your side, this tide will come to your shore.");
+        form.reset();
+    } catch (error) {
+        alert("Transmission failed. The void is busy. Try again.");
+    } finally {
+        btn.innerHTML = "I RELEASE THIS ENERGY";
+        btn.disabled = false;
+    }
+  };
+</script>
+
+</body>
+</html>
