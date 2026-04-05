@@ -5,250 +5,237 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EXALTIS | The Sovereign Archive</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IM+Fell+English+SC&family=Montserrat:wght@200;400&display=swap');
+
         :root {
             --jaguar-black: #030303;
             --parchment: #E6E2D3;
             --deep-indigo: #2E3192;
+            --blood-red: #3a0202;
+            --lavender: #E6E6FA;
             --ink: #1a1a1a;
-            --page-joy: #E6E2D3; 
-            --page-calm: #2E3192; 
-            --page-rage: #3a0202; 
-            --page-void: #000000;
+            --electric-gold: #FFD700; /* High-contrast trigger */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--jaguar-black); color: var(--parchment); font-family: 'Garamond', serif; overflow: hidden; height: 100dvh; width: 100vw; position: fixed; }
+        body { background-color: var(--jaguar-black); color: var(--parchment); font-family: 'Montserrat', sans-serif; overflow: hidden; height: 100dvh; width: 100vw; position: fixed; }
+
+        .watermark { position: fixed; bottom: 30px; right: 30px; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 10px; opacity: 0.08; pointer-events: none; z-index: 1; text-transform: uppercase; }
 
         /* --- STAGE 1: SOUL AUDIT --- */
-        #audit-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; transition: 0.8s; padding: 20px; }
-        .vampire-letter { font-size: 0.9rem; line-height: 1.8; color: var(--parchment); opacity: 0.8; margin-bottom: 40px; padding: 30px; border-left: 2px solid var(--deep-indigo); text-align: left; font-style: italic; background: rgba(46, 49, 146, 0.05); }
-        .handle-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #222; width: 100%; max-width: 300px; transition: 0.4s; }
-        .at-symbol { color: var(--deep-indigo); font-size: 1.2rem; padding-right: 8px; font-weight: bold; }
-        .handle-input { background: transparent; border: none; color: var(--parchment); padding: 15px 0; font-family: inherit; font-size: 1.1rem; letter-spacing: 2px; outline: none; width: 100%; }
-        .sigil-entrance { cursor: not-allowed; display: flex; flex-direction: column; align-items: center; opacity: 0.05; transition: 1.2s; }
-        .sigil-icon { width: 50px; height: 50px; border: 1px solid var(--deep-indigo); transform: rotate(45deg); transition: 1.5s; }
+        #audit-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; transition: 0.8s; background: radial-gradient(circle at center, #0a0a0a 0%, #030303 100%); z-index: 100; position: relative; }
+        #audit-view h2 { font-family: 'Cinzel', serif; letter-spacing: 18px; font-size: 0.8rem; margin-bottom: 50px; color: var(--lavender); }
+        .vampire-letter { font-size: 0.85rem; line-height: 2; color: var(--lavender); opacity: 0.5; margin-bottom: 50px; padding: 30px; border-left: 1px solid rgba(230, 230, 250, 0.2); text-align: left; font-style: italic; max-width: 400px; font-family: 'IM Fell English SC', serif; }
+        .handle-wrapper { display: flex; align-items: center; border-bottom: 1px solid rgba(230, 230, 250, 0.1); width: 100%; max-width: 300px; margin-bottom: 40px; }
+        .at-symbol { color: var(--lavender); font-size: 1.1rem; padding-right: 8px; font-family: 'Cinzel', serif; }
+        .handle-input { background: transparent; border: none; color: var(--lavender); padding: 12px 0; font-family: inherit; font-size: 0.9rem; outline: none; width: 100%; letter-spacing: 3px; }
+        .sigil-gate { cursor: pointer; opacity: 0.05; transition: 1.2s; text-align: center; }
+        .sigil-icon { width: 55px; height: 55px; border: 1px solid var(--lavender); transform: rotate(45deg); margin: 0 auto 20px; transition: 1.2s; }
+        .sigil-gate.unlocked { opacity: 1; }
 
         /* --- STAGE 2: LIBRARY --- */
         #library-view { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; opacity: 0; transition: 1s; }
-        .shelf { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
-        .book { width: 110px; height: 170px; cursor: pointer; transition: 0.6s; border-radius: 2px 5px 5px 2px; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; box-shadow: 15px 15px 40px rgba(0,0,0,0.8); }
-        .book.joy { background: var(--page-joy); color: #111; }
-        .book.calm { background: var(--page-calm); color: var(--parchment); }
-        .book.rage { background: var(--page-rage); color: var(--parchment); }
-        .book.void { width: 95px; height: 145px; background: #000; border: 1px solid #333; box-shadow: 0 0 30px rgba(46, 49, 146, 0.2); }
-        
-        /* --- STAR ARCHIVE CATALOGUE --- */
-        #star-archive-view { display: none; position: fixed; inset: 0; background: #050505; z-index: 200; flex-direction: column; align-items: center; padding: 50px 20px; opacity: 0; transition: 0.5s; overflow-y: auto; }
-        .star-item { width: 100%; max-width: 400px; padding: 20px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; }
-        .star-item:hover { background: rgba(46, 49, 146, 0.1); }
-        .star-preview { font-size: 0.9rem; color: var(--parchment); opacity: 0.8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .star-meta { font-size: 0.6rem; color: var(--deep-indigo); letter-spacing: 2px; margin-top: 10px; text-transform: uppercase; }
+        .shelf { display: flex; gap: 25px; flex-wrap: wrap; justify-content: center; padding: 20px; }
+        .book { width: 110px; height: 170px; cursor: pointer; transition: 0.5s; border-radius: 2px 5px 5px 2px; padding: 20px; display: flex; align-items: flex-end; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 3px; box-shadow: 15px 15px 40px rgba(0,0,0,0.8); }
+        .book.joy { background: var(--parchment); color: var(--ink); }
+        .book.calm { background: var(--deep-indigo); color: var(--lavender); }
+        .book.rage { background: var(--blood-red); color: var(--parchment); }
+        .book.void { width: 95px; height: 145px; background: #000; border: 1px solid #222; color: var(--deep-indigo); margin-top: 40px; }
 
-        /* --- STAGE 3: JOURNAL --- */
-        #journal-view { display: none; position: fixed; inset: 0; background: var(--jaguar-black); justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: 0.7s; padding: 15px; }
-        .diary-page { width: 100%; max-width: 450px; height: 85dvh; padding: 45px; position: relative; transition: 0.8s; clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%); }
-        .diary-input { width: 100%; height: 75%; background: transparent; border: none; outline: none; color: var(--ink); font-family: inherit; font-size: 1.2rem; resize: none; line-height: 2; }
-        .page-nav-container { position: absolute; bottom: 35px; left: 45px; right: 45px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-btn { font-size: 0.65rem; letter-spacing: 2px; cursor: pointer; color: var(--deep-indigo); font-weight: bold; visibility: hidden; }
-        .page-counter { font-size: 0.65rem; letter-spacing: 3px; opacity: 0.4; color: var(--ink); }
+        /* --- STAGE 3: STAR VIEW --- */
+        #star-view { display: none; position: fixed; inset: 0; background: #050505; z-index: 500; flex-direction: column; align-items: center; padding: 60px 20px; overflow-y: auto; opacity: 0; transition: 0.5s; }
+        .star-card { width: 100%; max-width: 400px; padding: 25px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; }
+        .star-card:hover { background: rgba(46, 49, 146, 0.1); }
+        .star-preview { font-size: 0.9rem; font-style: italic; color: var(--parchment); margin-bottom: 10px; font-family: 'IM Fell English SC', serif; }
+        .star-meta { font-size: 0.55rem; color: var(--deep-indigo); letter-spacing: 3px; text-transform: uppercase; font-family: 'Cinzel', serif; }
 
-        .void-active .diary-page { background: #000 !important; clip-path: none; border: 1px solid #111; }
-        .void-active .diary-input { color: var(--parchment); text-shadow: 0 0 10px rgba(46, 49, 146, 0.6); }
-        .void-active .page-nav-container, .void-active #star-btn { display: none !important; }
+        /* --- STAGE 4: JOURNAL --- */
+        #journal-view { display: none; position: fixed; inset: 0; background: var(--jaguar-black); justify-content: center; align-items: center; z-index: 200; transition: 0.7s; opacity: 0; }
+        .diary-page { width: 90%; max-width: 460px; height: 85dvh; padding: 45px; position: relative; transition: 0.8s; clip-path: polygon(0 0, 100% 0, 100% 98%, 0 100%); }
+        .diary-input { width: 100%; height: 75%; background: transparent; border: none; outline: none; font-family: 'IM Fell English SC', serif; font-size: 1.25rem; resize: none; line-height: 2; color: var(--ink); }
+        .search-box { margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); display: none; }
+        .search-input { width: 100%; background: transparent; border: none; padding: 8px 0; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; letter-spacing: 2px; outline: none; color: inherit; opacity: 0.4; }
+        .footer { position: absolute; bottom: 35px; left: 45px; right: 45px; display: flex; justify-content: space-between; align-items: center; }
+        .nav { font-size: 0.6rem; color: var(--deep-indigo); cursor: pointer; font-weight: bold; visibility: hidden; letter-spacing: 2px; font-family: 'Cinzel', serif; }
+        .pg-num { font-size: 0.6rem; opacity: 0.3; letter-spacing: 4px; font-family: 'Cinzel', serif; }
 
-        #cloud-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 99; background: radial-gradient(circle, transparent 20%, black 80%); opacity: 0; transition: 1.8s; }
-        #exaltis-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #080808; border: 1px solid var(--deep-indigo); padding: 40px; z-index: 10000; text-align: center; width: 90%; max-width: 400px; opacity: 0; transition: 0.4s; }
+        .void-active .diary-page { background: #000 !important; border: 1px solid #111; clip-path: none; }
+        .void-active .diary-input { color: var(--parchment); text-shadow: 0 0 12px var(--deep-indigo); font-family: 'Montserrat', sans-serif; font-weight: 200; }
+
+        /* --- RITUALS --- */
+        #cloud-ritual { position: fixed; inset: 0; background: radial-gradient(circle, transparent 5%, black 75%); opacity: 0; pointer-events: none; z-index: 400; transition: 2.2s ease; }
+        #heavy-heart { position: fixed; inset: 0; background: #000; z-index: 10001; display: none; align-items: center; justify-content: center; color: var(--electric-gold); font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 12px; text-align: center; font-weight: bold; }
+        #pop-gate { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #080808; border: 1px solid var(--deep-indigo); padding: 40px; z-index: 10000; text-align: center; width: 85%; max-width: 400px; opacity: 0; transition: 0.4s; }
     </style>
 </head>
 <body>
 
-    <div id="cloud-overlay"></div>
+    <div class="watermark">EXALTIS // SOVEREIGN ARCHIVE</div>
+    <div id="cloud-ritual"></div>
+    <div id="heavy-heart">A HEAVY HEART KILLS YOU ALIVE</div>
 
-    <div id="exaltis-popup">
-        <p id="popup-text" style="font-size: 1rem; line-height: 1.8; color: var(--parchment); font-style: italic;"></p>
-        <div style="display:flex; justify-content:center; gap:30px; margin-top:40px;">
-            <button onclick="handlePopupAction(true)" style="background:var(--deep-indigo); border:none; color:white; padding:15px 35px; cursor:pointer; font-size: 0.8rem; font-weight: bold;">PROCEED</button>
-            <button id="popup-btn-no" onclick="handlePopupAction(false)" style="background:transparent; border:1px solid #333; color:var(--parchment); padding:15px 35px; cursor:pointer; font-size: 0.8rem;">RETREAT</button>
+    <div id="pop-gate">
+        <p id="pop-text" style="font-size: 0.95rem; line-height: 1.8; font-style: italic; margin-bottom: 35px; color: var(--parchment); font-family: 'IM Fell English SC', serif;"></p>
+        <div style="display:flex; justify-content:center; gap:25px;">
+            <button onclick="popConfirm(true)" style="background:var(--deep-indigo); border:none; color:white; padding:12px 25px; cursor:pointer; font-family:'Cinzel'; font-size:0.7rem;">PROCEED</button>
+            <button onclick="popConfirm(false)" style="background:transparent; border:1px solid #333; color:var(--parchment); padding:12px 25px; cursor:pointer; font-family:'Cinzel'; font-size:0.7rem;">RETREAT</button>
         </div>
     </div>
 
     <div id="audit-view">
-        <div class="audit-container">
-            <h2 style="letter-spacing: 15px; margin-bottom: 30px; font-size: 0.75rem; color: var(--deep-indigo);">THE SOUL AUDIT</h2>
-            <div class="vampire-letter">"Leave your pretenses at the gates. Enter only if you seek the truth."</div>
-            <div class="handle-wrapper">
-                <span class="at-symbol">@</span>
-                <input type="text" class="handle-input" id="insta-id" placeholder="your instagram handle" oninput="validateHandle()">
-            </div>
-            <div class="sigil-entrance" id="sigil-gate" onclick="attemptEntrance()">
-                <div class="sigil-icon"></div>
-                <p style="margin-top:20px; font-size:0.6rem; letter-spacing:5px; color:var(--deep-indigo);">SEAL & ENTER</p>
-            </div>
+        <h2 style="font-family:'Cinzel';">The Soul Audit</h2>
+        <div class="vampire-letter">"Leave your pretenses at the gates. Enter only if you seek the truth that the daylight fears to reveal."</div>
+        <div class="handle-wrapper">
+            <span class="at-symbol">@</span>
+            <input type="text" class="handle-input" id="insta-id" placeholder="your instagram handle" oninput="checkH()">
+        </div>
+        <div class="sigil-gate" id="sigil" onclick="goLib()">
+            <div class="sigil-icon"></div>
+            <p style="font-size:0.5rem; letter-spacing:6px; color:var(--lavender); text-transform: uppercase;">Seal & Enter</p>
         </div>
     </div>
 
     <div id="library-view">
         <div class="shelf">
-            <div class="book joy" onclick="openDiary('joy')"><span>JOY</span></div>
-            <div class="book calm" onclick="openDiary('calm')"><span>CALM</span></div>
-            <div class="book rage" onclick="openDiary('rage')"><span>RAGE</span></div>
+            <div class="book joy" onclick="openBook('joy')">JOY</div>
+            <div class="book calm" onclick="openBook('calm')">CALM</div>
+            <div class="book rage" onclick="openBook('rage')">RAGE</div>
         </div>
-        <div class="book void" onclick="triggerVoid()" style="margin-top:40px;"><span>VOID</span></div>
-        <div onclick="showStarArchive()" style="margin-top:50px; cursor:pointer; font-size:0.6rem; letter-spacing:8px; color:var(--deep-indigo);">[ VIEW STARRED THOUGHTS ]</div>
+        <div class="book void" onclick="triggerVoid()" style="justify-content:center; align-items:center;">VOID</div>
+        <p onclick="viewStars()" style="margin-top:60px; cursor:pointer; font-size:0.6rem; letter-spacing:8px; color:var(--deep-indigo); font-weight: bold; font-family:'Cinzel';">[ VIEW STARRED THOUGHTS ]</p>
+        <p onclick="backAudit()" style="margin-top:30px; cursor:pointer; font-size:0.45rem; letter-spacing:10px; opacity:0.2; font-family:'Cinzel';">[ BACK TO AUDIT ]</p>
     </div>
 
-    <div id="star-archive-view">
-        <h2 style="letter-spacing:10px; font-size:0.8rem; margin-bottom:40px; color:var(--deep-indigo);">THE STARRED CATALOGUE</h2>
-        <div id="star-list-container"></div>
-        <p onclick="closeStarArchive()" style="margin-top:40px; cursor:pointer; font-size:0.6rem; opacity:0.5;">[ RETURN TO LIBRARY ]</p>
+    <div id="star-view">
+        <h2 style="font-family:'Cinzel'; letter-spacing:12px; font-size:0.8rem; margin-bottom:50px; color:var(--deep-indigo);">STARRED CATALOGUE</h2>
+        <div id="star-list" style="width:100%;"></div>
+        <p onclick="sw('star-view', 'library-view')" style="margin-top:50px; cursor:pointer; font-size:0.5rem; opacity:0.4; letter-spacing:4px; font-family:'Cinzel';">[ RETURN TO LIBRARY ]</p>
     </div>
 
     <div id="journal-view">
-        <div class="diary-page" id="active-page">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <span id="archive-label" style="font-size: 0.7rem; opacity: 0.5; letter-spacing: 5px;">THE ARCHIVE</span>
-                <span style="cursor:pointer; font-size: 1.5rem; color: var(--deep-indigo);" id="star-btn" onclick="toggleStar()">✧</span>
+        <div class="diary-page" id="surface">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span id="label" style="font-size: 0.6rem; letter-spacing: 5px; opacity:0.4; font-family:'Cinzel';">THE ARCHIVE</span>
+                <span style="cursor:pointer; font-size: 1.5rem; color: var(--deep-indigo); opacity:0.6;" id="star-icon" onclick="toggleStar()">✧</span>
             </div>
-            <textarea class="diary-input" id="text-input" placeholder="..." oninput="handleTyping()"></textarea>
-            <div class="page-nav-container">
-                <div class="nav-btn" id="prev-btn" onclick="changePage(-1)">[ PREV ]</div>
-                <div class="page-counter" id="pg-count">PAGE 1 / 444</div>
-                <div class="nav-btn" id="next-btn" onclick="changePage(1)">[ NEXT ]</div>
+            <div class="search-box" id="search-container">
+                <input type="text" class="search-input" id="search-bar" placeholder="SEARCH THROUGH TIME..." oninput="findText()">
             </div>
-            <div style="position: absolute; top: 25px; right: 45px; font-size: 0.6rem; cursor: pointer; letter-spacing: 4px; font-weight: bold; color: var(--deep-indigo);" onclick="sealExit()">[ SEAL ]</div>
+            <textarea class="diary-input" id="writer" placeholder="..." oninput="logic()"></textarea>
+            <div class="footer">
+                <div class="nav" id="p-btn" onclick="turn(-1)">[ PREV ]</div>
+                <div class="pg-num" id="pg-num">PAGE 1 / 444</div>
+                <div class="nav" id="n-btn" onclick="turn(1)">[ NEXT ]</div>
+            </div>
+            <div id="seal-trigger" style="position: absolute; top: 25px; right: 45px; font-size: 0.55rem; cursor: pointer; letter-spacing: 5px; font-weight: bold; color: var(--electric-gold); font-family:'Cinzel';" onclick="seal()">[ SEAL ]</div>
         </div>
     </div>
 
     <script>
-        let currentMood = '';
-        let currentPage = 0;
-        let starredThoughts = [];
-        let bookData = { 
-            joy: Array(444).fill(""), 
-            calm: Array(444).fill(""), 
-            rage: Array(444).fill(""), 
-            void: [""] 
-        };
+        let curM = ''; let idx = 0;
+        let starred = [];
+        let db = { joy: Array(444).fill(""), calm: Array(444).fill(""), rage: Array(444).fill(""), void: [""] };
+        const colors = { joy: "#E6E2D3", calm: "#2E3192", rage: "#3a0202", void: "#000000" };
 
-        function validateHandle() {
-            const val = document.getElementById('insta-id').value.trim();
-            document.getElementById('sigil-gate').style.opacity = val.length >= 3 ? "1" : "0.05";
-            document.getElementById('sigil-gate').style.cursor = val.length >= 3 ? "pointer" : "not-allowed";
+        function checkH() {
+            const v = document.getElementById('insta-id').value.trim();
+            document.getElementById('sigil').classList.toggle('unlocked', v.length >= 3);
         }
 
-        function attemptEntrance() {
-            if(document.getElementById('insta-id').value.length < 3) return;
-            showPopup("Meditate before you write. The Archive is now watching.", 'enterLibrary');
+        function goLib() {
+            if(document.getElementById('insta-id').value.trim().length < 3) return;
+            sw('audit-view', 'library-view');
         }
 
         function triggerVoid() {
-            document.getElementById('cloud-overlay').classList.add('active');
-            setTimeout(() => {
-                showPopup("The Void is for grave confessions. It does not save. It does not remember. Once sealed, it is gone forever. Enter?", 'enterVoid');
-            }, 800);
+            document.getElementById('cloud-ritual').style.opacity = "1";
+            setTimeout(() => showPop("The Void is for grave confessions. It does not save. It does not remember. Proceed?", 'void'), 1200);
         }
 
-        function openDiary(mood, page = 0) {
-            currentMood = mood;
-            currentPage = page;
-            const jView = document.getElementById('journal-view');
-            document.getElementById('cloud-overlay').classList.remove('active');
+        function openBook(m, p = 0) {
+            curM = m; idx = p;
+            const j = document.getElementById('journal-view');
+            const s = document.getElementById('surface');
+            document.getElementById('cloud-ritual').style.opacity = "0";
+            j.className = m === 'void' ? 'void-active' : '';
+            document.getElementById('label').innerText = m === 'void' ? "THE VOID" : (m === 'calm' ? "THE SANCTUARY" : "THE ARCHIVE");
+            document.getElementById('search-container').style.display = (m === 'void') ? 'none' : 'block';
             
-            jView.className = mood === 'void' ? 'void-active' : '';
-            document.getElementById('archive-label').innerText = mood === 'void' ? "THE VOID" : "THE ARCHIVE";
-            
-            updatePageUI();
-            switchView(document.querySelector('div[style*="display: flex"]')?.id || 'library-view', 'journal-view');
-            setTimeout(() => { jView.style.display = 'flex'; jView.style.opacity = '1'; jView.classList.add('active'); }, 50);
-        }
-
-        function handleTyping() {
-            const input = document.getElementById('text-input');
-            bookData[currentMood][currentPage] = input.value;
-            
-            // Reintroduce page limit logic
-            const nextBtn = document.getElementById('next-btn');
-            if (input.scrollHeight > input.clientHeight && currentPage < 443 && currentMood !== 'void') {
-                nextBtn.style.visibility = "visible";
-            } else if (currentPage < 443 && bookData[currentMood][currentPage+1] !== "") {
-                nextBtn.style.visibility = "visible";
-            } else {
-                nextBtn.style.visibility = "hidden";
-            }
-        }
-
-        function changePage(dir) {
-            currentPage += dir;
-            updatePageUI();
-        }
-
-        function updatePageUI() {
-            const input = document.getElementById('text-input');
-            input.value = bookData[currentMood][currentPage];
-            document.getElementById('pg-count').innerText = `PAGE ${currentPage + 1} / 444`;
-            document.getElementById('active-page').style.backgroundColor = `var(--page-${currentMood})`;
-            document.getElementById('prev-btn').style.visibility = currentPage > 0 ? "visible" : "hidden";
-            document.getElementById('star-btn').innerText = isStarred(currentMood, currentPage) ? "✦" : "✧";
-            handleTyping();
+            s.style.backgroundColor = colors[m];
+            ui(); j.style.display = 'flex'; setTimeout(() => j.style.opacity = "1", 50);
         }
 
         function toggleStar() {
-            const index = starredThoughts.findIndex(s => s.mood === currentMood && s.page === currentPage);
-            if(index > -1) {
-                starredThoughts.splice(index, 1);
-            } else if(bookData[currentMood][currentPage].trim() !== "") {
-                starredThoughts.push({ mood: currentMood, page: currentPage, text: bookData[currentMood][currentPage] });
-            }
-            updatePageUI();
+            if(!db[curM][idx].trim() || curM === 'void') return;
+            const sIdx = starred.findIndex(s => s.m === curM && s.p === idx);
+            if(sIdx > -1) starred.splice(sIdx, 1);
+            else starred.push({ m: curM, p: idx, t: db[curM][idx] });
+            ui();
         }
 
-        function isStarred(m, p) { return starredThoughts.some(s => s.mood === m && s.page === p); }
-
-        function showStarArchive() {
-            const container = document.getElementById('star-list-container');
-            container.innerHTML = starredThoughts.length ? "" : "<p style='opacity:0.3; font-size:0.7rem;'>No stars recorded.</p>";
-            starredThoughts.forEach(s => {
-                const item = document.createElement('div');
-                item.className = 'star-item';
-                item.innerHTML = `<p class="star-preview">"${s.text}"</p><p class="star-meta">${s.mood} • Page ${s.page + 1}</p>`;
-                item.onclick = () => { closeStarArchive(); openDiary(s.mood, s.page); };
-                container.appendChild(item);
+        function viewStars() {
+            const list = document.getElementById('star-list');
+            list.innerHTML = starred.length ? "" : "<p style='opacity:0.3; font-size:0.7rem; text-align:center;'>Archive empty.</p>";
+            starred.forEach(s => {
+                const card = document.createElement('div'); card.className = 'star-card';
+                card.innerHTML = `<p class="star-preview">"${s.t.substring(0, 80)}..."</p><p class="star-meta">${s.m} — Page ${s.p + 1}</p>`;
+                card.onclick = () => { sw('star-view', 'journal-view'); openBook(s.m, s.p); };
+                list.appendChild(card);
             });
-            switchView('library-view', 'star-archive-view');
+            sw('library-view', 'star-view');
         }
 
-        function sealExit() {
-            if(currentMood === 'void') {
-                showPopup("Are you certain? The Void destroys all evidence.", 'finalSeal');
-            } else {
-                switchView('journal-view', 'library-view');
+        function logic() {
+            const w = document.getElementById('writer'); db[curM][idx] = w.value;
+            if(curM === 'void') return;
+            document.getElementById('n-btn').style.visibility = (w.scrollHeight > w.clientHeight || (idx < 443 && db[curM][idx+1] !== "")) ? "visible" : "hidden";
+            document.getElementById('p-btn').style.visibility = idx > 0 ? "visible" : "hidden";
+        }
+
+        function findText() {
+            const t = document.getElementById('search-bar').value.toLowerCase();
+            if(!t || t.length < 2) return;
+            const f = db[curM].findIndex(p => p.toLowerCase().includes(t));
+            if(f !== -1) { idx = f; ui(); }
+        }
+
+        function turn(d) { idx += d; ui(); }
+
+        function ui() {
+            const w = document.getElementById('writer'); w.value = db[curM][idx];
+            document.getElementById('pg-num').innerText = `PAGE ${idx + 1} / 444`;
+            document.getElementById('star-icon').innerText = starred.some(s => s.m === curM && s.p === idx) ? "✦" : "✧";
+            w.style.color = (curM === 'joy') ? '#1a1a1a' : (curM === 'calm' ? '#E6E6FA' : '#E6E2D3');
+            logic();
+        }
+
+        function seal() {
+            if(curM === 'void') showPop("Are you certain? The Void destroys all evidence.", 'seal-void');
+            else {
+                const r = document.getElementById('heavy-heart'); r.style.display = 'flex';
+                setTimeout(() => { r.style.display = 'none'; sw('journal-view', 'library-view'); }, 2800);
             }
         }
 
-        function switchView(from, to) {
-            const f = document.getElementById(from); const t = document.getElementById(to);
-            if(f) { f.style.opacity = '0'; setTimeout(() => f.style.display = 'none', 500); }
-            t.style.display = 'flex'; setTimeout(() => t.style.opacity = '1', 50);
+        function backAudit() { 
+            document.getElementById('insta-id').value = "";
+            document.getElementById('sigil').classList.remove('unlocked');
+            sw('library-view', 'audit-view'); 
         }
 
-        function showPopup(text, action) {
-            document.getElementById('popup-text').innerText = text;
-            window.pendingAction = action;
-            const p = document.getElementById('exaltis-popup');
-            p.style.display = 'block'; setTimeout(() => p.style.opacity = "1", 50);
+        function showPop(t, a) { document.getElementById('pop-text').innerText = t; window.activeA = a; const g = document.getElementById('pop-gate'); g.style.display = 'block'; setTimeout(() => g.style.opacity = "1", 50); }
+
+        function popConfirm(c) {
+            const g = document.getElementById('pop-gate'); g.style.opacity = "0"; setTimeout(() => g.style.display = 'none', 300);
+            if(c) { if(window.activeA === 'void') openBook('void'); if(window.activeA === 'seal-void') { db.void = [""]; sw('journal-view', 'library-view'); } }
+            else document.getElementById('cloud-ritual').style.opacity = "0";
         }
 
-        function handlePopupAction(confirmed) {
-            const p = document.getElementById('exaltis-popup');
-            p.style.opacity = "0"; setTimeout(() => p.style.display = 'none', 400);
-            if(confirmed) {
-                if(window.pendingAction === 'enterLibrary') switchView('audit-view', 'library-view');
-                if(window.pendingAction === 'enterVoid') openDiary('void');
-                if(window.pendingAction === 'finalSeal') { bookData.void = [""]; switchView('journal-view', 'library-view'); }
-            }
+        function sw(f, t) {
+            const elF = document.getElementById(f); const elT = document.getElementById(t);
+            if(elF) { elF.style.opacity = '0'; setTimeout(() => elF.style.display = 'none', 600); }
+            elT.style.display = 'flex'; setTimeout(() => elT.style.opacity = '1', 100);
         }
-
-        function closeStarArchive() { switchView('star-archive-view', 'library-view'); }
     </script>
 </body>
 </html>
