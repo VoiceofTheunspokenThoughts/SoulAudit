@@ -9,127 +9,120 @@
             --jaguar-black: #030303;
             --blood-red: #3a0202;
             --sacred-gold: #8e7d5a;
-            --parchment: #c2b9a3;
-            --ink: #a0a0a0;
-            --page-joy: #161512; --page-calm: #121316; --page-rage: #161212; --page-void: #080808;
+            --parchment: #E6E2D3;
+            --deep-indigo: #2E3192;
+            --ink: #1a1a1a;
+            --page-joy: var(--parchment); 
+            --page-calm: #f0eee4; 
+            --page-rage: #dcd7c5; 
+            --page-void: #000000;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--jaguar-black); color: var(--ink); font-family: 'Garamond', serif; overflow: hidden; height: 100dvh; width: 100vw; position: fixed; }
+        body { background-color: var(--jaguar-black); color: var(--parchment); font-family: 'Garamond', serif; overflow: hidden; height: 100dvh; width: 100vw; position: fixed; }
 
         /* --- STAGE 1: SOUL AUDIT --- */
-        #audit-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; transition: 0.6s ease; padding: 20px; }
+        #audit-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; transition: 0.8s; padding: 20px; }
         .audit-container { width: 100%; max-width: 450px; text-align: center; }
         
         .vampire-letter {
-            font-size: 0.85rem; line-height: 1.6; color: var(--parchment); opacity: 0.6;
-            margin-bottom: 30px; padding: 20px; border-left: 1px solid #1a1a1a;
-            text-align: left; font-style: italic; background: rgba(10,10,10,0.5);
+            font-size: 0.9rem; line-height: 1.8; color: var(--parchment); opacity: 0.8;
+            margin-bottom: 40px; padding: 30px; border-left: 2px solid var(--deep-indigo);
+            text-align: left; font-style: italic; background: rgba(46, 49, 146, 0.05);
         }
 
         .handle-wrapper {
             display: flex; justify-content: center; align-items: center; 
-            margin-bottom: 25px; border-bottom: 1px solid #1a1a1a; width: 100%; max-width: 280px; margin-left: auto; margin-right: auto;
-            transition: 0.4s; opacity: 0.4;
+            margin-bottom: 30px; border-bottom: 1px solid #222; width: 100%; max-width: 300px; margin-left: auto; margin-right: auto;
         }
-        .handle-wrapper:focus-within { opacity: 1; border-color: var(--sacred-gold); }
-        .at-symbol { color: var(--sacred-gold); font-size: 0.9rem; padding-right: 5px; }
         .handle-input {
-            background: transparent; border: none; color: var(--sacred-gold); 
-            padding: 12px 0; font-family: inherit; font-size: 1rem;
-            letter-spacing: 3px; outline: none; width: 100%;
+            background: transparent; border: none; color: var(--parchment); 
+            padding: 15px 0; font-family: inherit; font-size: 1.1rem;
+            letter-spacing: 4px; outline: none; width: 100%; text-transform: uppercase;
         }
 
         .audit-input { 
-            width: 100%; background: rgba(5,5,5,0.8); border: 1px solid #111; 
-            color: #fff; padding: 20px; font-family: inherit; font-size: 1rem; 
-            resize: none; outline: none; margin-bottom: 30px; height: 120px;
+            width: 100%; background: #050505; border: 1px solid #111; 
+            color: #fff; padding: 25px; font-family: inherit; font-size: 1rem; 
+            resize: none; outline: none; margin-bottom: 40px; height: 150px;
         }
 
-        .sigil-entrance { 
-            cursor: not-allowed; display: flex; flex-direction: column; align-items: center; 
-            opacity: 0.1; transition: 0.8s ease;
-        }
+        .sigil-entrance { cursor: not-allowed; display: flex; flex-direction: column; align-items: center; opacity: 0.05; transition: 1.2s; }
         .sigil-entrance.unlocked { cursor: pointer; opacity: 1; }
-        .sigil-icon { width: 40px; height: 40px; border: 1px solid #1a1a1a; transform: rotate(45deg); transition: 1s; }
-        .sigil-entrance.unlocked:hover .sigil-icon { border-color: var(--blood-red); transform: rotate(225deg); }
-        .sigil-label { margin-top: 15px; font-size: 0.6rem; letter-spacing: 5px; color: var(--sacred-gold); text-transform: uppercase; }
+        .sigil-icon { width: 50px; height: 50px; border: 1px solid var(--deep-indigo); transform: rotate(45deg); transition: 1.5s; }
+        .sigil-entrance.unlocked:hover .sigil-icon { transform: rotate(405deg); box-shadow: 0 0 20px var(--deep-indigo); }
+        .sigil-label { margin-top: 20px; font-size: 0.7rem; letter-spacing: 6px; color: var(--deep-indigo); text-transform: uppercase; }
 
         /* --- STAGE 2: LIBRARY --- */
-        #library-view { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; opacity: 0; transition: 0.5s; padding: 20px; }
-        .shelf { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 40px; }
+        #library-view { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; opacity: 0; transition: 1s; padding: 20px; }
+        .shelf { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
         .book {
-            width: 100px; height: 150px; border: 1px solid rgba(255,255,255,0.02);
-            cursor: pointer; transition: 0.5s; border-radius: 1px 4px 4px 1px;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 15px;
-            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+            width: 110px; height: 170px; border: 1px solid rgba(230, 226, 211, 0.1);
+            cursor: pointer; transition: 0.6s; border-radius: 2px 5px 5px 2px;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
+            box-shadow: 15px 15px 40px rgba(0,0,0,0.8);
         }
-        .book.joy { background: #2e2a1d; } .book.calm { background: #1d212e; } .book.rage { background: #2e1d1d; }
-        .book.void { width: 85px; height: 125px; background: #1a1a1a; border: 1px solid #333; }
-        
-        .return-link {
-            margin-top: 50px; font-size: 0.6rem; letter-spacing: 8px; font-weight: 900; 
-            color: var(--sacred-gold); opacity: 0.3; cursor: pointer; text-transform: uppercase; padding: 10px;
+        .book.void { 
+            width: 95px; height: 145px; background: #000; border: 1px solid #333; 
+            box-shadow: 0 0 30px rgba(46, 49, 146, 0.2); 
         }
 
+        /* --- CLOUD TRANSITION EFFECT --- */
+        #cloud-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 99;
+            background: radial-gradient(circle, transparent 20%, black 70%);
+            mask-image: radial-gradient(circle, transparent 10%, black 50%);
+            -webkit-mask-image: radial-gradient(circle, transparent 10%, black 50%);
+            opacity: 0; transition: 1.5s ease-in-out;
+        }
+        #cloud-overlay.active { opacity: 1; transform: scale(2); }
+
         /* --- STAGE 3: DIARY --- */
-        #journal-view { display: none; position: fixed; inset: 0; background: var(--jaguar-black); justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: 0.4s ease-in-out; padding: 15px; }
+        #journal-view { display: none; position: fixed; inset: 0; background: var(--jaguar-black); justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: 0.7s; padding: 15px; }
         .diary-page { 
-            width: 100%; max-width: 400px; height: 80dvh; padding: 35px; position: relative; 
-            transform: translateY(20px); transition: 0.5s ease;
-            clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 99% 3%, 100% 5%, 99% 95%, 100% 97%, 99% 99%, 1% 100%, 0% 98%, 1% 96%, 0% 94%, 1% 6%, 0% 4%, 1% 2%);
-            overflow: hidden;
+            width: 100%; max-width: 450px; height: 85dvh; padding: 45px; position: relative; 
+            transform: translateY(50px); transition: 0.8s;
+            clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%);
         }
         #journal-view.active .diary-page { transform: translateY(0); }
         .diary-input { 
-            width: 100%; height: 75%; background: transparent; border: none; outline: none; 
-            color: var(--ink); font-family: inherit; font-size: 1.1rem; resize: none; 
-            line-height: 1.8;
+            width: 100%; height: 80%; background: transparent; border: none; outline: none; 
+            color: var(--ink); font-family: inherit; font-size: 1.2rem; resize: none; line-height: 2;
         }
 
-        .page-nav-container { position: absolute; bottom: 25px; left: 35px; right: 35px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-btn { font-size: 0.65rem; letter-spacing: 2px; cursor: pointer; color: var(--sacred-gold); opacity: 0.6; display: none; padding: 10px; }
-        .page-counter { font-size: 0.65rem; letter-spacing: 2px; opacity: 0.3; }
+        .void-active .diary-page { background: #000 !important; clip-path: none; border: 1px solid #111; }
+        .void-active .diary-input { color: var(--parchment); text-shadow: 0 0 10px rgba(46, 49, 146, 0.5); }
+        .void-active .page-nav-container, .void-active #star-btn { display: none !important; }
 
-        /* --- OVERLAYS --- */
-        #exaltis-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #080808; border: 1px solid #1a1a1a; padding: 35px; z-index: 10000; text-align: center; width: 85%; max-width: 350px; opacity: 0; transition: 0.3s; }
-        #exit-prompt { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--sacred-gold); font-size: 0.8rem; letter-spacing: 6px; opacity: 0; transition: 0.8s; z-index: 10001; text-align: center; width: 85%; pointer-events: none; text-transform: uppercase; }
-
-        @media (max-width: 480px) {
-            .book { width: 90px; height: 135px; }
-            .diary-page { padding: 30px; height: 78dvh; }
-        }
+        /* --- POPUPS --- */
+        #exaltis-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #080808; border: 1px solid var(--deep-indigo); padding: 40px; z-index: 10000; text-align: center; width: 90%; max-width: 400px; opacity: 0; transition: 0.4s; }
+        #exit-prompt { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--deep-indigo); font-size: 0.9rem; letter-spacing: 12px; opacity: 0; transition: 1.2s; z-index: 10001; text-align: center; width: 100%; pointer-events: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <form id="audit-form" action="https://formspree.io/f/xlgopwaz" method="POST" style="display:none;">
-        <input type="text" name="instagram_handle" id="form-handle">
-        <textarea name="shadow_entry" id="form-shadow"></textarea>
-    </form>
-
-    <div id="exit-prompt">"A HEAVY HEART EATS YOU ALIVE"</div>
+    <div id="cloud-overlay"></div>
+    <div id="exit-prompt">"THE VOID CONSUMES ALL"</div>
 
     <div id="exaltis-popup">
-        <p id="popup-text" style="font-size: 0.9rem; line-height: 1.6; color: var(--parchment);"></p>
-        <div style="display:flex; justify-content:center; gap:25px; margin-top:35px;">
-            <button onclick="handlePopupAction(true)" style="background:transparent; border:1px solid #333; color:var(--ink); padding:12px 30px; cursor:pointer; font-size: 0.75rem; letter-spacing: 2px;">CONTINUE</button>
-            <button id="popup-btn-no" onclick="handlePopupAction(false)" style="background:transparent; border:1px solid #333; color:var(--ink); padding:12px 30px; cursor:pointer; font-size: 0.75rem; letter-spacing: 2px;">CANCEL</button>
+        <p id="popup-text" style="font-size: 1rem; line-height: 1.8; color: var(--parchment); font-style: italic;"></p>
+        <div style="display:flex; justify-content:center; gap:30px; margin-top:40px;">
+            <button onclick="handlePopupAction(true)" style="background:var(--deep-indigo); border:none; color:white; padding:15px 35px; cursor:pointer; font-size: 0.8rem; letter-spacing: 3px; font-weight: bold;">PROCEED</button>
+            <button id="popup-btn-no" onclick="handlePopupAction(false)" style="background:transparent; border:1px solid #333; color:var(--parchment); padding:15px 35px; cursor:pointer; font-size: 0.8rem; letter-spacing: 3px;">RETREAT</button>
         </div>
     </div>
 
     <div id="audit-view">
         <div class="audit-container">
-            <h2 style="letter-spacing: 12px; margin-bottom: 25px; font-size: 0.65rem; opacity: 0.4;">THE SOUL AUDIT</h2>
-            <div class="vampire-letter">"Leave your pretenses at the gates. Enter only if you seek the truth that the daylight fears to reveal."</div>
+            <h2 style="letter-spacing: 15px; margin-bottom: 30px; font-size: 0.75rem; color: var(--deep-indigo);">THE SOUL AUDIT</h2>
+            <div class="vampire-letter">"Leave your pretenses at the gates. Enter only if you seek the truth."</div>
             <div class="handle-wrapper">
-                <span class="at-symbol">@</span>
-                <input type="text" class="handle-input" id="insta-id" placeholder="INSTAGRAM_HANDLE" autocomplete="off" oninput="validateHandle()">
+                <input type="text" class="handle-input" id="insta-id" placeholder="IDENTIFIER" autocomplete="off" oninput="validateHandle()">
             </div>
-            <textarea class="audit-input" id="shadow-text" placeholder="State your shadow..."></textarea>
+            <textarea class="audit-input" id="shadow-text" placeholder="Unspoken truth..."></textarea>
             <div class="sigil-entrance" id="sigil-gate" onclick="attemptEntrance()">
                 <div class="sigil-icon"></div>
-                <div class="sigil-label">Seal & Enter</div>
+                <div class="sigil-label">Seal & Ascend</div>
             </div>
         </div>
     </div>
@@ -140,143 +133,111 @@
             <div class="book calm" onclick="openDiary('calm')"><span>CALM</span></div>
             <div class="book rage" onclick="openDiary('rage')"><span>RAGE</span></div>
         </div>
-        <div class="book void" onclick="openDiary('void')"><span>VOID</span></div>
-        <p class="return-link" onclick="resetAndReturn()">[ Return to Soul Audit ]</p>
+        <div class="book void" onclick="triggerVoid()"><span>VOID</span></div>
+        <p class="return-link" onclick="resetAndReturn()" style="margin-top: 50px; cursor:pointer; opacity: 0.3;">[ BACK ]</p>
     </div>
 
     <div id="journal-view">
         <div class="diary-page" id="active-page">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <span style="font-size: 0.65rem; opacity: 0.3; letter-spacing: 3px;">THE ARCHIVE</span>
-                <span style="cursor:pointer; font-size: 1.3rem; line-height:0;" id="star-btn">✧</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <span id="archive-label" style="font-size: 0.7rem; opacity: 0.5; letter-spacing: 5px;">THE ARCHIVE</span>
+                <span style="cursor:pointer; font-size: 1.5rem; color: var(--deep-indigo);" id="star-btn">✧</span>
             </div>
             <textarea class="diary-input" id="text-input" placeholder="..." oninput="handleTyping()"></textarea>
-            <div class="page-nav-container">
-                <div class="nav-btn" id="prev-btn" onclick="turnPage(-1)">[ PREV ]</div>
-                <div class="page-counter" id="pg-count">PAGE 1 / 444</div>
-                <div class="nav-btn" id="next-btn" onclick="turnPage(1)">[ NEXT ]</div>
-            </div>
-            <div style="position: absolute; top: 18px; right: 35px; font-size: 0.55rem; cursor: pointer; letter-spacing: 3px; opacity: 0.4;" onclick="initiateSeal()">[ SEAL ]</div>
+            <div style="position: absolute; top: 25px; right: 45px; font-size: 0.6rem; cursor: pointer; letter-spacing: 4px; font-weight: bold; color: var(--deep-indigo);" onclick="confirmSeal()">[ SEAL ]</div>
         </div>
     </div>
 
     <script>
         let currentMood = '';
         let bookData = { joy: [""], calm: [""], rage: [""], void: [""] };
-        let currentPageIndex = 0;
         let typingTimer;
 
-        // --- BROWSER BREAKOUT PROTOCOL ---
-        function checkInAppBrowser() {
+        // Instagram Breakout (Restored & Hidden)
+        window.addEventListener('load', () => {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            const isInstagram = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
-            
-            if (isInstagram) {
-                if (ua.includes("Android")) {
-                    const currentUrl = window.location.href.replace(/https?:\/\//, "");
-                    window.location.href = `intent://${currentUrl}#Intent;scheme=https;package=com.android.chrome;end`;
-                } else {
-                    // Instruction for iOS users
-                    showPopup("Sovereign Protocol: Instagram is restricting your entry. Tap the '...' (top-right) and select 'Open in System Browser' for the full Archive experience.", 'none');
-                }
+            if (ua.includes('Instagram') && ua.includes("Android")) {
+                window.location.href = `intent://${window.location.href.replace(/https?:\/\//, "")}#Intent;scheme=https;package=com.android.chrome;end`;
             }
-        }
-
-        window.addEventListener('load', () => { 
-            window.scrollTo(0, 0); 
-            checkInAppBrowser();
         });
 
         function validateHandle() {
             const h = document.getElementById('insta-id').value.trim();
-            const g = document.getElementById('sigil-gate');
-            (h.length >= 3) ? g.classList.add('unlocked') : g.classList.remove('unlocked');
-        }
-
-        function resetAndReturn() {
-            document.getElementById('insta-id').value = "";
-            document.getElementById('shadow-text').value = "";
-            document.getElementById('sigil-gate').classList.remove('unlocked');
-            switchView('library-view', 'audit-view');
+            document.getElementById('sigil-gate').style.opacity = h.length >= 3 ? "1" : "0.05";
+            document.getElementById('sigil-gate').style.cursor = h.length >= 3 ? "pointer" : "not-allowed";
         }
 
         function attemptEntrance() {
-            if(!document.getElementById('sigil-gate').classList.contains('unlocked')) return;
-            document.getElementById('form-handle').value = "@" + document.getElementById('insta-id').value;
-            document.getElementById('form-shadow').value = document.getElementById('shadow-text').value;
-            
-            const formData = new FormData(document.getElementById('audit-form'));
-            fetch(document.getElementById('audit-form').action, { 
-                method: 'POST', 
-                body: formData,
-                mode: 'no-cors' 
-            });
-
-            showPopup("Meditate for some time before using this to be aware of what you will write.", 'enterLibrary');
+            if(document.getElementById('insta-id').value.length < 3) return;
+            showPopup("Meditate upon your intent. The Archive is now watching.", 'enterLibrary');
         }
 
-        function switchView(from, to) {
-            const f = document.getElementById(from); const t = document.getElementById(to);
-            f.style.opacity = '0';
+        function triggerVoid() {
+            document.getElementById('cloud-overlay').classList.add('active');
             setTimeout(() => {
-                f.style.display = 'none';
-                t.style.display = 'flex';
-                void t.offsetWidth; 
-                t.style.opacity = '1';
-            }, 400);
+                showPopup("The Void keeps no history and grants no mercy. Once sealed, your words vanish. Enter?", 'enterVoid');
+            }, 800);
         }
 
         function openDiary(mood) {
             currentMood = mood;
-            currentPageIndex = bookData[mood].length - 1;
-            updatePageUI();
+            const jView = document.getElementById('journal-view');
+            const archiveLabel = document.getElementById('archive-label');
             
-            const lib = document.getElementById('library-view');
-            const journal = document.getElementById('journal-view');
+            document.getElementById('cloud-overlay').classList.remove('active');
             
-            lib.style.opacity = '0';
-            setTimeout(() => {
-                lib.style.display = 'none';
-                journal.style.display = 'flex';
-                window.scrollTo(0, 0); 
-                setTimeout(() => { 
-                    journal.classList.add('active'); 
-                    journal.style.opacity = '1'; 
-                }, 50);
-            }, 400); 
+            if(mood === 'void') {
+                jView.classList.add('void-active');
+                archiveLabel.innerText = "THE VOID";
+            } else {
+                jView.classList.remove('void-active');
+                archiveLabel.innerText = "THE ARCHIVE";
+            }
+
+            document.getElementById('text-input').value = bookData[mood][0];
+            document.getElementById('active-page').style.backgroundColor = `var(--page-${mood})`;
+            
+            switchView('library-view', 'journal-view');
+            setTimeout(() => { jView.classList.add('active'); }, 100);
         }
 
         function handleTyping() {
             clearTimeout(typingTimer);
             typingTimer = setTimeout(() => {
-                const el = document.getElementById('text-input');
-                bookData[currentMood][currentPageIndex] = el.value;
-                const showNext = (el.scrollHeight > el.clientHeight || currentPageIndex < bookData[currentMood].length - 1);
-                document.getElementById('next-btn').style.display = showNext ? 'block' : 'none';
+                bookData[currentMood][0] = document.getElementById('text-input').value;
             }, 60);
         }
 
-        function turnPage(dir) {
-            currentPageIndex += dir;
-            if (currentPageIndex >= bookData[currentMood].length && bookData[currentMood].length < 444) bookData[currentMood].push("");
-            updatePageUI();
+        function confirmSeal() {
+            if (currentMood === 'void') {
+                showPopup("Are you certain? The Void will consume these thoughts forever.", 'finalSeal');
+            } else {
+                initiateSeal();
+            }
         }
 
-        function updatePageUI() {
-            document.getElementById('text-input').value = bookData[currentMood][currentPageIndex];
-            document.getElementById('pg-count').innerText = `PAGE ${currentPageIndex + 1} / 444`;
-            document.getElementById('active-page').style.backgroundColor = `var(--page-${currentMood})`;
-            document.getElementById('prev-btn').style.display = (currentPageIndex > 0) ? 'block' : 'none';
-            handleTyping();
+        function initiateSeal() { 
+            const exitP = document.getElementById('exit-prompt');
+            exitP.style.opacity = "1";
+            document.getElementById('journal-view').classList.remove('active');
+            setTimeout(() => {
+                exitP.style.opacity = "0";
+                if(currentMood === 'void') bookData.void = [""]; 
+                switchView('journal-view', 'library-view');
+            }, 2000);
+        }
+
+        function switchView(from, to) {
+            const f = document.getElementById(from); const t = document.getElementById(to);
+            f.style.opacity = '0';
+            setTimeout(() => { f.style.display = 'none'; t.style.display = 'flex'; void t.offsetWidth; t.style.opacity = '1'; }, 600);
         }
 
         function showPopup(text, action) {
             document.getElementById('popup-text').innerText = text;
             window.pendingAction = action;
             const p = document.getElementById('exaltis-popup');
-            document.getElementById('popup-btn-no').style.display = (action === 'none') ? 'none' : 'inline-block';
-            p.style.display = 'block'; 
-            setTimeout(() => p.style.opacity = "1", 50);
+            p.style.display = 'block'; setTimeout(() => p.style.opacity = "1", 50);
         }
 
         function handlePopupAction(confirmed) {
@@ -284,18 +245,18 @@
             p.style.opacity = "0";
             setTimeout(() => {
                 p.style.display = 'none';
-                if(confirmed && window.pendingAction === 'enterLibrary') switchView('audit-view', 'library-view');
+                if(confirmed) {
+                    if(window.pendingAction === 'enterLibrary') switchView('audit-view', 'library-view');
+                    if(window.pendingAction === 'enterVoid') openDiary('void');
+                    if(window.pendingAction === 'finalSeal') initiateSeal();
+                } else {
+                    document.getElementById('cloud-overlay').classList.remove('active');
+                }
             }, 300);
         }
 
-        function initiateSeal() { 
-            const exitP = document.getElementById('exit-prompt');
-            exitP.style.opacity = "0.8";
-            document.getElementById('journal-view').classList.remove('active');
-            setTimeout(() => {
-                exitP.style.opacity = "0";
-                switchView('journal-view', 'library-view');
-            }, 1500);
+        function resetAndReturn() {
+            switchView('library-view', 'audit-view');
         }
     </script>
 </body>
