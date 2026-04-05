@@ -18,7 +18,7 @@
         body { background-color: var(--jaguar-black); color: var(--ink); font-family: 'Garamond', serif; overflow: hidden; height: 100dvh; width: 100vw; position: fixed; }
 
         /* --- STAGE 1: SOUL AUDIT --- */
-        #audit-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; transition: 0.6s cubic-bezier(0.2, 0, 0.2, 1); padding: 20px; }
+        #audit-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; transition: 0.6s ease; padding: 20px; }
         .audit-container { width: 100%; max-width: 450px; text-align: center; }
         
         .vampire-letter {
@@ -36,7 +36,7 @@
         .at-symbol { color: var(--sacred-gold); font-size: 0.9rem; padding-right: 5px; }
         .handle-input {
             background: transparent; border: none; color: var(--sacred-gold); 
-            padding: 12px 0; font-family: inherit; font-size: 1rem; /* Prevents auto-zoom on mobile */
+            padding: 12px 0; font-family: inherit; font-size: 1rem;
             letter-spacing: 3px; outline: none; width: 100%;
         }
 
@@ -48,15 +48,15 @@
 
         .sigil-entrance { 
             cursor: not-allowed; display: flex; flex-direction: column; align-items: center; 
-            opacity: 0.1; transition: 1s ease; filter: grayscale(1);
+            opacity: 0.1; transition: 0.8s ease;
         }
-        .sigil-entrance.unlocked { cursor: pointer; opacity: 1; filter: grayscale(0); }
-        .sigil-icon { width: 40px; height: 40px; border: 1px solid #1a1a1a; transform: rotate(45deg); transition: 1.5s; }
+        .sigil-entrance.unlocked { cursor: pointer; opacity: 1; }
+        .sigil-icon { width: 40px; height: 40px; border: 1px solid #1a1a1a; transform: rotate(45deg); transition: 1s; }
         .sigil-entrance.unlocked:hover .sigil-icon { border-color: var(--blood-red); transform: rotate(225deg); }
         .sigil-label { margin-top: 15px; font-size: 0.6rem; letter-spacing: 5px; color: var(--sacred-gold); text-transform: uppercase; }
 
         /* --- STAGE 2: LIBRARY --- */
-        #library-view { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; opacity: 0; transition: 0.5s; transform: scale(1.05); padding: 20px; }
+        #library-view { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; opacity: 0; transition: 0.5s; padding: 20px; }
         .shelf { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 40px; }
         .book {
             width: 100px; height: 150px; border: 1px solid rgba(255,255,255,0.02);
@@ -65,25 +65,22 @@
             box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
         }
         .book.joy { background: #2e2a1d; } .book.calm { background: #1d212e; } .book.rage { background: #2e1d1d; }
-        .book.void { width: 85px; height: 125px; background: #1a1a1a; }
+        .book.void { width: 85px; height: 125px; background: #1a1a1a; border: 1px solid #333; }
         
         .return-link {
             margin-top: 50px; font-size: 0.6rem; letter-spacing: 8px; font-weight: 900; 
-            color: var(--sacred-gold); opacity: 0.3; cursor: pointer; transition: 0.4s; 
-            text-transform: uppercase; text-align: center; padding: 10px;
+            color: var(--sacred-gold); opacity: 0.3; cursor: pointer; text-transform: uppercase; padding: 10px;
         }
-        .return-link:hover { opacity: 0.8; }
-        .fav-section-link { margin-top: 30px; cursor: pointer; letter-spacing: 5px; font-size: 0.6rem; color: var(--sacred-gold); opacity: 0.4; text-align: center; }
 
         /* --- STAGE 3: DIARY --- */
-        #journal-view { display: none; position: fixed; inset: 0; background: var(--jaguar-black); justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: 0.5s; padding: 15px; }
+        #journal-view { display: none; position: fixed; inset: 0; background: var(--jaguar-black); justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: 0.4s ease-in-out; padding: 15px; }
         .diary-page { 
             width: 100%; max-width: 400px; height: 80dvh; padding: 35px; position: relative; 
-            transform: scale(0.9) translateY(40px); transition: 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+            transform: translateY(20px); transition: 0.5s ease;
             clip-path: polygon(1% 0%, 99% 0%, 100% 1%, 99% 3%, 100% 5%, 99% 95%, 100% 97%, 99% 99%, 1% 100%, 0% 98%, 1% 96%, 0% 94%, 1% 6%, 0% 4%, 1% 2%);
             overflow: hidden;
         }
-        #journal-view.active .diary-page { transform: scale(1) translateY(0); }
+        #journal-view.active .diary-page { transform: translateY(0); }
         .diary-input { 
             width: 100%; height: 75%; background: transparent; border: none; outline: none; 
             color: var(--ink); font-family: inherit; font-size: 1.1rem; resize: none; 
@@ -95,14 +92,12 @@
         .page-counter { font-size: 0.65rem; letter-spacing: 2px; opacity: 0.3; }
 
         /* --- OVERLAYS --- */
-        #exaltis-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #080808; border: 1px solid #1a1a1a; padding: 35px; z-index: 10000; text-align: center; width: 85%; max-width: 350px; opacity: 0; transition: 0.4s; }
-        #exit-prompt { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--sacred-gold); font-size: 0.8rem; letter-spacing: 6px; opacity: 0; transition: 1s; z-index: 10001; text-align: center; width: 85%; pointer-events: none; text-transform: uppercase; }
+        #exaltis-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #080808; border: 1px solid #1a1a1a; padding: 35px; z-index: 10000; text-align: center; width: 85%; max-width: 350px; opacity: 0; transition: 0.3s; }
+        #exit-prompt { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--sacred-gold); font-size: 0.8rem; letter-spacing: 6px; opacity: 0; transition: 0.8s; z-index: 10001; text-align: center; width: 85%; pointer-events: none; text-transform: uppercase; }
 
         @media (max-width: 480px) {
-            .vampire-letter { font-size: 0.8rem; }
             .book { width: 90px; height: 135px; }
-            .diary-page { padding: 30px; height: 75dvh; }
-            .diary-input { font-size: 1rem; }
+            .diary-page { padding: 30px; height: 78dvh; }
         }
     </style>
 </head>
@@ -118,8 +113,8 @@
     <div id="exaltis-popup">
         <p id="popup-text" style="font-size: 0.9rem; line-height: 1.6; color: var(--parchment);"></p>
         <div style="display:flex; justify-content:center; gap:25px; margin-top:35px;">
-            <button onclick="handlePopupAction(true)" style="background:transparent; border:1px solid #333; color:var(--ink); padding:12px 30px; cursor:pointer; font-size: 0.75rem; letter-spacing: 2px;">YES</button>
-            <button id="popup-btn-no" onclick="handlePopupAction(false)" style="background:transparent; border:1px solid #333; color:var(--ink); padding:12px 30px; cursor:pointer; font-size: 0.75rem; letter-spacing: 2px;">NO</button>
+            <button onclick="handlePopupAction(true)" style="background:transparent; border:1px solid #333; color:var(--ink); padding:12px 30px; cursor:pointer; font-size: 0.75rem; letter-spacing: 2px;">CONTINUE</button>
+            <button id="popup-btn-no" onclick="handlePopupAction(false)" style="background:transparent; border:1px solid #333; color:var(--ink); padding:12px 30px; cursor:pointer; font-size: 0.75rem; letter-spacing: 2px;">CANCEL</button>
         </div>
     </div>
 
@@ -145,8 +140,7 @@
             <div class="book calm" onclick="openDiary('calm')"><span>CALM</span></div>
             <div class="book rage" onclick="openDiary('rage')"><span>RAGE</span></div>
         </div>
-        <div class="book void" onclick="triggerVoidEntrance()"><span>VOID</span></div>
-        <div class="fav-section-link" onclick="openFavIndex()">[ ARCHIVE SEARCHER ]</div>
+        <div class="book void" onclick="openDiary('void')"><span>VOID</span></div>
         <p class="return-link" onclick="resetAndReturn()">[ Return to Soul Audit ]</p>
     </div>
 
@@ -154,7 +148,7 @@
         <div class="diary-page" id="active-page">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <span style="font-size: 0.65rem; opacity: 0.3; letter-spacing: 3px;">THE ARCHIVE</span>
-                <span style="cursor:pointer; font-size: 1.3rem; line-height:0;" id="star-btn" onclick="saveToFav()">✧</span>
+                <span style="cursor:pointer; font-size: 1.3rem; line-height:0;" id="star-btn">✧</span>
             </div>
             <textarea class="diary-input" id="text-input" placeholder="..." oninput="handleTyping()"></textarea>
             <div class="page-nav-container">
@@ -171,6 +165,27 @@
         let bookData = { joy: [""], calm: [""], rage: [""], void: [""] };
         let currentPageIndex = 0;
         let typingTimer;
+
+        // --- BROWSER BREAKOUT PROTOCOL ---
+        function checkInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            const isInstagram = (ua.indexOf('Instagram') > -1) || (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
+            
+            if (isInstagram) {
+                if (ua.includes("Android")) {
+                    const currentUrl = window.location.href.replace(/https?:\/\//, "");
+                    window.location.href = `intent://${currentUrl}#Intent;scheme=https;package=com.android.chrome;end`;
+                } else {
+                    // Instruction for iOS users
+                    showPopup("Sovereign Protocol: Instagram is restricting your entry. Tap the '...' (top-right) and select 'Open in System Browser' for the full Archive experience.", 'none');
+                }
+            }
+        }
+
+        window.addEventListener('load', () => { 
+            window.scrollTo(0, 0); 
+            checkInAppBrowser();
+        });
 
         function validateHandle() {
             const h = document.getElementById('insta-id').value.trim();
@@ -189,7 +204,14 @@
             if(!document.getElementById('sigil-gate').classList.contains('unlocked')) return;
             document.getElementById('form-handle').value = "@" + document.getElementById('insta-id').value;
             document.getElementById('form-shadow').value = document.getElementById('shadow-text').value;
-            fetch(document.getElementById('audit-form').action, { method: 'POST', body: new FormData(document.getElementById('audit-form')) }).catch(()=>{});
+            
+            const formData = new FormData(document.getElementById('audit-form'));
+            fetch(document.getElementById('audit-form').action, { 
+                method: 'POST', 
+                body: formData,
+                mode: 'no-cors' 
+            });
+
             showPopup("Meditate for some time before using this to be aware of what you will write.", 'enterLibrary');
         }
 
@@ -199,22 +221,29 @@
             setTimeout(() => {
                 f.style.display = 'none';
                 t.style.display = 'flex';
-                requestAnimationFrame(() => { t.style.opacity = '1'; t.style.transform = 'scale(1)'; });
-            }, 500);
+                void t.offsetWidth; 
+                t.style.opacity = '1';
+            }, 400);
         }
 
         function openDiary(mood) {
             currentMood = mood;
             currentPageIndex = bookData[mood].length - 1;
             updatePageUI();
+            
             const lib = document.getElementById('library-view');
             const journal = document.getElementById('journal-view');
+            
             lib.style.opacity = '0';
             setTimeout(() => {
                 lib.style.display = 'none';
                 journal.style.display = 'flex';
-                setTimeout(() => { journal.classList.add('active'); journal.style.opacity = '1'; }, 50);
-            }, 500); 
+                window.scrollTo(0, 0); 
+                setTimeout(() => { 
+                    journal.classList.add('active'); 
+                    journal.style.opacity = '1'; 
+                }, 50);
+            }, 400); 
         }
 
         function handleTyping() {
@@ -222,7 +251,8 @@
             typingTimer = setTimeout(() => {
                 const el = document.getElementById('text-input');
                 bookData[currentMood][currentPageIndex] = el.value;
-                document.getElementById('next-btn').style.display = (el.scrollHeight > el.clientHeight || currentPageIndex < bookData[currentMood].length - 1) ? 'block' : 'none';
+                const showNext = (el.scrollHeight > el.clientHeight || currentPageIndex < bookData[currentMood].length - 1);
+                document.getElementById('next-btn').style.display = showNext ? 'block' : 'none';
             }, 60);
         }
 
@@ -240,21 +270,13 @@
             handleTyping();
         }
 
-        function saveToFav() {
-            const star = document.getElementById('star-btn');
-            star.style.color = "var(--sacred-gold)";
-            star.style.textShadow = "0 0 10px var(--sacred-gold)";
-            setTimeout(() => {
-                star.style.color = "var(--ink)";
-                star.style.textShadow = "none";
-            }, 1000);
-        }
-
         function showPopup(text, action) {
             document.getElementById('popup-text').innerText = text;
             window.pendingAction = action;
             const p = document.getElementById('exaltis-popup');
-            p.style.display = 'block'; setTimeout(() => p.style.opacity = "1", 10);
+            document.getElementById('popup-btn-no').style.display = (action === 'none') ? 'none' : 'inline-block';
+            p.style.display = 'block'; 
+            setTimeout(() => p.style.opacity = "1", 50);
         }
 
         function handlePopupAction(confirmed) {
@@ -263,20 +285,17 @@
             setTimeout(() => {
                 p.style.display = 'none';
                 if(confirmed && window.pendingAction === 'enterLibrary') switchView('audit-view', 'library-view');
-                if(confirmed && window.pendingAction === 'finalizeVoid') finalizeClose();
-            }, 400);
+            }, 300);
         }
 
-        function initiateSeal() { finalizeClose(); }
-
-        function finalizeClose() {
+        function initiateSeal() { 
             const exitP = document.getElementById('exit-prompt');
             exitP.style.opacity = "0.8";
             document.getElementById('journal-view').classList.remove('active');
             setTimeout(() => {
                 exitP.style.opacity = "0";
                 switchView('journal-view', 'library-view');
-            }, 1800);
+            }, 1500);
         }
     </script>
 </body>
