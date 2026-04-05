@@ -7,14 +7,12 @@
     <style>
         :root {
             --jaguar-black: #030303;
-            --blood-red: #3a0202;
-            --sacred-gold: #8e7d5a;
             --parchment: #E6E2D3;
             --deep-indigo: #2E3192;
             --ink: #1a1a1a;
-            --page-joy: var(--parchment); 
-            --page-calm: #f0eee4; 
-            --page-rage: #dcd7c5; 
+            --page-joy: #E6E2D3; 
+            --page-calm: #2E3192; 
+            --page-rage: #3a0202; 
             --page-void: #000000;
         }
 
@@ -23,92 +21,54 @@
 
         /* --- STAGE 1: SOUL AUDIT --- */
         #audit-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; transition: 0.8s; padding: 20px; }
-        .audit-container { width: 100%; max-width: 450px; text-align: center; }
-        
-        .vampire-letter {
-            font-size: 0.9rem; line-height: 1.8; color: var(--parchment); opacity: 0.8;
-            margin-bottom: 40px; padding: 30px; border-left: 2px solid var(--deep-indigo);
-            text-align: left; font-style: italic; background: rgba(46, 49, 146, 0.05);
-        }
-
-        .handle-wrapper {
-            display: flex; justify-content: center; align-items: center; 
-            margin-bottom: 30px; border-bottom: 1px solid #222; width: 100%; max-width: 300px; margin-left: auto; margin-right: auto;
-        }
-        .handle-input {
-            background: transparent; border: none; color: var(--parchment); 
-            padding: 15px 0; font-family: inherit; font-size: 1.1rem;
-            letter-spacing: 4px; outline: none; width: 100%; text-transform: uppercase;
-        }
-
-        .audit-input { 
-            width: 100%; background: #050505; border: 1px solid #111; 
-            color: #fff; padding: 25px; font-family: inherit; font-size: 1rem; 
-            resize: none; outline: none; margin-bottom: 40px; height: 150px;
-        }
-
+        .vampire-letter { font-size: 0.9rem; line-height: 1.8; color: var(--parchment); opacity: 0.8; margin-bottom: 40px; padding: 30px; border-left: 2px solid var(--deep-indigo); text-align: left; font-style: italic; background: rgba(46, 49, 146, 0.05); }
+        .handle-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #222; width: 100%; max-width: 300px; transition: 0.4s; }
+        .at-symbol { color: var(--deep-indigo); font-size: 1.2rem; padding-right: 8px; font-weight: bold; }
+        .handle-input { background: transparent; border: none; color: var(--parchment); padding: 15px 0; font-family: inherit; font-size: 1.1rem; letter-spacing: 2px; outline: none; width: 100%; }
         .sigil-entrance { cursor: not-allowed; display: flex; flex-direction: column; align-items: center; opacity: 0.05; transition: 1.2s; }
-        .sigil-entrance.unlocked { cursor: pointer; opacity: 1; }
         .sigil-icon { width: 50px; height: 50px; border: 1px solid var(--deep-indigo); transform: rotate(45deg); transition: 1.5s; }
-        .sigil-entrance.unlocked:hover .sigil-icon { transform: rotate(405deg); box-shadow: 0 0 20px var(--deep-indigo); }
-        .sigil-label { margin-top: 20px; font-size: 0.7rem; letter-spacing: 6px; color: var(--deep-indigo); text-transform: uppercase; }
 
         /* --- STAGE 2: LIBRARY --- */
-        #library-view { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; opacity: 0; transition: 1s; padding: 20px; }
+        #library-view { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100dvh; opacity: 0; transition: 1s; }
         .shelf { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
-        .book {
-            width: 110px; height: 170px; border: 1px solid rgba(230, 226, 211, 0.1);
-            cursor: pointer; transition: 0.6s; border-radius: 2px 5px 5px 2px;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 20px;
-            box-shadow: 15px 15px 40px rgba(0,0,0,0.8);
-        }
-        .book.void { 
-            width: 95px; height: 145px; background: #000; border: 1px solid #333; 
-            box-shadow: 0 0 30px rgba(46, 49, 146, 0.2); 
-        }
+        .book { width: 110px; height: 170px; cursor: pointer; transition: 0.6s; border-radius: 2px 5px 5px 2px; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; box-shadow: 15px 15px 40px rgba(0,0,0,0.8); }
+        .book.joy { background: var(--page-joy); color: #111; }
+        .book.calm { background: var(--page-calm); color: var(--parchment); }
+        .book.rage { background: var(--page-rage); color: var(--parchment); }
+        .book.void { width: 95px; height: 145px; background: #000; border: 1px solid #333; box-shadow: 0 0 30px rgba(46, 49, 146, 0.2); }
+        
+        /* --- STAR ARCHIVE CATALOGUE --- */
+        #star-archive-view { display: none; position: fixed; inset: 0; background: #050505; z-index: 200; flex-direction: column; align-items: center; padding: 50px 20px; opacity: 0; transition: 0.5s; overflow-y: auto; }
+        .star-item { width: 100%; max-width: 400px; padding: 20px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; }
+        .star-item:hover { background: rgba(46, 49, 146, 0.1); }
+        .star-preview { font-size: 0.9rem; color: var(--parchment); opacity: 0.8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .star-meta { font-size: 0.6rem; color: var(--deep-indigo); letter-spacing: 2px; margin-top: 10px; text-transform: uppercase; }
 
-        /* --- CLOUD TRANSITION EFFECT --- */
-        #cloud-overlay {
-            position: fixed; inset: 0; pointer-events: none; z-index: 99;
-            background: radial-gradient(circle, transparent 20%, black 70%);
-            mask-image: radial-gradient(circle, transparent 10%, black 50%);
-            -webkit-mask-image: radial-gradient(circle, transparent 10%, black 50%);
-            opacity: 0; transition: 1.5s ease-in-out;
-        }
-        #cloud-overlay.active { opacity: 1; transform: scale(2); }
-
-        /* --- STAGE 3: DIARY --- */
+        /* --- STAGE 3: JOURNAL --- */
         #journal-view { display: none; position: fixed; inset: 0; background: var(--jaguar-black); justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: 0.7s; padding: 15px; }
-        .diary-page { 
-            width: 100%; max-width: 450px; height: 85dvh; padding: 45px; position: relative; 
-            transform: translateY(50px); transition: 0.8s;
-            clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%);
-        }
-        #journal-view.active .diary-page { transform: translateY(0); }
-        .diary-input { 
-            width: 100%; height: 80%; background: transparent; border: none; outline: none; 
-            color: var(--ink); font-family: inherit; font-size: 1.2rem; resize: none; line-height: 2;
-        }
+        .diary-page { width: 100%; max-width: 450px; height: 85dvh; padding: 45px; position: relative; transition: 0.8s; clip-path: polygon(0% 2%, 2% 0%, 98% 0%, 100% 2%, 100% 98%, 98% 100%, 2% 100%, 0% 98%); }
+        .diary-input { width: 100%; height: 75%; background: transparent; border: none; outline: none; color: var(--ink); font-family: inherit; font-size: 1.2rem; resize: none; line-height: 2; }
+        .page-nav-container { position: absolute; bottom: 35px; left: 45px; right: 45px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-btn { font-size: 0.65rem; letter-spacing: 2px; cursor: pointer; color: var(--deep-indigo); font-weight: bold; visibility: hidden; }
+        .page-counter { font-size: 0.65rem; letter-spacing: 3px; opacity: 0.4; color: var(--ink); }
 
         .void-active .diary-page { background: #000 !important; clip-path: none; border: 1px solid #111; }
-        .void-active .diary-input { color: var(--parchment); text-shadow: 0 0 10px rgba(46, 49, 146, 0.5); }
+        .void-active .diary-input { color: var(--parchment); text-shadow: 0 0 10px rgba(46, 49, 146, 0.6); }
         .void-active .page-nav-container, .void-active #star-btn { display: none !important; }
 
-        /* --- POPUPS --- */
+        #cloud-overlay { position: fixed; inset: 0; pointer-events: none; z-index: 99; background: radial-gradient(circle, transparent 20%, black 80%); opacity: 0; transition: 1.8s; }
         #exaltis-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #080808; border: 1px solid var(--deep-indigo); padding: 40px; z-index: 10000; text-align: center; width: 90%; max-width: 400px; opacity: 0; transition: 0.4s; }
-        #exit-prompt { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--deep-indigo); font-size: 0.9rem; letter-spacing: 12px; opacity: 0; transition: 1.2s; z-index: 10001; text-align: center; width: 100%; pointer-events: none; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="cloud-overlay"></div>
-    <div id="exit-prompt">"THE VOID CONSUMES ALL"</div>
 
     <div id="exaltis-popup">
         <p id="popup-text" style="font-size: 1rem; line-height: 1.8; color: var(--parchment); font-style: italic;"></p>
         <div style="display:flex; justify-content:center; gap:30px; margin-top:40px;">
-            <button onclick="handlePopupAction(true)" style="background:var(--deep-indigo); border:none; color:white; padding:15px 35px; cursor:pointer; font-size: 0.8rem; letter-spacing: 3px; font-weight: bold;">PROCEED</button>
-            <button id="popup-btn-no" onclick="handlePopupAction(false)" style="background:transparent; border:1px solid #333; color:var(--parchment); padding:15px 35px; cursor:pointer; font-size: 0.8rem; letter-spacing: 3px;">RETREAT</button>
+            <button onclick="handlePopupAction(true)" style="background:var(--deep-indigo); border:none; color:white; padding:15px 35px; cursor:pointer; font-size: 0.8rem; font-weight: bold;">PROCEED</button>
+            <button id="popup-btn-no" onclick="handlePopupAction(false)" style="background:transparent; border:1px solid #333; color:var(--parchment); padding:15px 35px; cursor:pointer; font-size: 0.8rem;">RETREAT</button>
         </div>
     </div>
 
@@ -117,12 +77,12 @@
             <h2 style="letter-spacing: 15px; margin-bottom: 30px; font-size: 0.75rem; color: var(--deep-indigo);">THE SOUL AUDIT</h2>
             <div class="vampire-letter">"Leave your pretenses at the gates. Enter only if you seek the truth."</div>
             <div class="handle-wrapper">
-                <input type="text" class="handle-input" id="insta-id" placeholder="IDENTIFIER" autocomplete="off" oninput="validateHandle()">
+                <span class="at-symbol">@</span>
+                <input type="text" class="handle-input" id="insta-id" placeholder="your instagram handle" oninput="validateHandle()">
             </div>
-            <textarea class="audit-input" id="shadow-text" placeholder="Unspoken truth..."></textarea>
             <div class="sigil-entrance" id="sigil-gate" onclick="attemptEntrance()">
                 <div class="sigil-icon"></div>
-                <div class="sigil-label">Seal & Ascend</div>
+                <p style="margin-top:20px; font-size:0.6rem; letter-spacing:5px; color:var(--deep-indigo);">SEAL & ENTER</p>
             </div>
         </div>
     </div>
@@ -133,104 +93,142 @@
             <div class="book calm" onclick="openDiary('calm')"><span>CALM</span></div>
             <div class="book rage" onclick="openDiary('rage')"><span>RAGE</span></div>
         </div>
-        <div class="book void" onclick="triggerVoid()"><span>VOID</span></div>
-        <p class="return-link" onclick="resetAndReturn()" style="margin-top: 50px; cursor:pointer; opacity: 0.3;">[ BACK ]</p>
+        <div class="book void" onclick="triggerVoid()" style="margin-top:40px;"><span>VOID</span></div>
+        <div onclick="showStarArchive()" style="margin-top:50px; cursor:pointer; font-size:0.6rem; letter-spacing:8px; color:var(--deep-indigo);">[ VIEW STARRED THOUGHTS ]</div>
+    </div>
+
+    <div id="star-archive-view">
+        <h2 style="letter-spacing:10px; font-size:0.8rem; margin-bottom:40px; color:var(--deep-indigo);">THE STARRED CATALOGUE</h2>
+        <div id="star-list-container"></div>
+        <p onclick="closeStarArchive()" style="margin-top:40px; cursor:pointer; font-size:0.6rem; opacity:0.5;">[ RETURN TO LIBRARY ]</p>
     </div>
 
     <div id="journal-view">
         <div class="diary-page" id="active-page">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
                 <span id="archive-label" style="font-size: 0.7rem; opacity: 0.5; letter-spacing: 5px;">THE ARCHIVE</span>
-                <span style="cursor:pointer; font-size: 1.5rem; color: var(--deep-indigo);" id="star-btn">✧</span>
+                <span style="cursor:pointer; font-size: 1.5rem; color: var(--deep-indigo);" id="star-btn" onclick="toggleStar()">✧</span>
             </div>
             <textarea class="diary-input" id="text-input" placeholder="..." oninput="handleTyping()"></textarea>
-            <div style="position: absolute; top: 25px; right: 45px; font-size: 0.6rem; cursor: pointer; letter-spacing: 4px; font-weight: bold; color: var(--deep-indigo);" onclick="confirmSeal()">[ SEAL ]</div>
+            <div class="page-nav-container">
+                <div class="nav-btn" id="prev-btn" onclick="changePage(-1)">[ PREV ]</div>
+                <div class="page-counter" id="pg-count">PAGE 1 / 444</div>
+                <div class="nav-btn" id="next-btn" onclick="changePage(1)">[ NEXT ]</div>
+            </div>
+            <div style="position: absolute; top: 25px; right: 45px; font-size: 0.6rem; cursor: pointer; letter-spacing: 4px; font-weight: bold; color: var(--deep-indigo);" onclick="sealExit()">[ SEAL ]</div>
         </div>
     </div>
 
     <script>
         let currentMood = '';
-        let bookData = { joy: [""], calm: [""], rage: [""], void: [""] };
-        let typingTimer;
-
-        // Instagram Breakout (Restored & Hidden)
-        window.addEventListener('load', () => {
-            const ua = navigator.userAgent || navigator.vendor || window.opera;
-            if (ua.includes('Instagram') && ua.includes("Android")) {
-                window.location.href = `intent://${window.location.href.replace(/https?:\/\//, "")}#Intent;scheme=https;package=com.android.chrome;end`;
-            }
-        });
+        let currentPage = 0;
+        let starredThoughts = [];
+        let bookData = { 
+            joy: Array(444).fill(""), 
+            calm: Array(444).fill(""), 
+            rage: Array(444).fill(""), 
+            void: [""] 
+        };
 
         function validateHandle() {
-            const h = document.getElementById('insta-id').value.trim();
-            document.getElementById('sigil-gate').style.opacity = h.length >= 3 ? "1" : "0.05";
-            document.getElementById('sigil-gate').style.cursor = h.length >= 3 ? "pointer" : "not-allowed";
+            const val = document.getElementById('insta-id').value.trim();
+            document.getElementById('sigil-gate').style.opacity = val.length >= 3 ? "1" : "0.05";
+            document.getElementById('sigil-gate').style.cursor = val.length >= 3 ? "pointer" : "not-allowed";
         }
 
         function attemptEntrance() {
             if(document.getElementById('insta-id').value.length < 3) return;
-            showPopup("Meditate upon your intent. The Archive is now watching.", 'enterLibrary');
+            showPopup("Meditate before you write. The Archive is now watching.", 'enterLibrary');
         }
 
         function triggerVoid() {
             document.getElementById('cloud-overlay').classList.add('active');
             setTimeout(() => {
-                showPopup("The Void keeps no history and grants no mercy. Once sealed, your words vanish. Enter?", 'enterVoid');
+                showPopup("The Void is for grave confessions. It does not save. It does not remember. Once sealed, it is gone forever. Enter?", 'enterVoid');
             }, 800);
         }
 
-        function openDiary(mood) {
+        function openDiary(mood, page = 0) {
             currentMood = mood;
+            currentPage = page;
             const jView = document.getElementById('journal-view');
-            const archiveLabel = document.getElementById('archive-label');
-            
             document.getElementById('cloud-overlay').classList.remove('active');
             
-            if(mood === 'void') {
-                jView.classList.add('void-active');
-                archiveLabel.innerText = "THE VOID";
-            } else {
-                jView.classList.remove('void-active');
-                archiveLabel.innerText = "THE ARCHIVE";
-            }
-
-            document.getElementById('text-input').value = bookData[mood][0];
-            document.getElementById('active-page').style.backgroundColor = `var(--page-${mood})`;
+            jView.className = mood === 'void' ? 'void-active' : '';
+            document.getElementById('archive-label').innerText = mood === 'void' ? "THE VOID" : "THE ARCHIVE";
             
-            switchView('library-view', 'journal-view');
-            setTimeout(() => { jView.classList.add('active'); }, 100);
+            updatePageUI();
+            switchView(document.querySelector('div[style*="display: flex"]')?.id || 'library-view', 'journal-view');
+            setTimeout(() => { jView.style.display = 'flex'; jView.style.opacity = '1'; jView.classList.add('active'); }, 50);
         }
 
         function handleTyping() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(() => {
-                bookData[currentMood][0] = document.getElementById('text-input').value;
-            }, 60);
-        }
-
-        function confirmSeal() {
-            if (currentMood === 'void') {
-                showPopup("Are you certain? The Void will consume these thoughts forever.", 'finalSeal');
+            const input = document.getElementById('text-input');
+            bookData[currentMood][currentPage] = input.value;
+            
+            // Reintroduce page limit logic
+            const nextBtn = document.getElementById('next-btn');
+            if (input.scrollHeight > input.clientHeight && currentPage < 443 && currentMood !== 'void') {
+                nextBtn.style.visibility = "visible";
+            } else if (currentPage < 443 && bookData[currentMood][currentPage+1] !== "") {
+                nextBtn.style.visibility = "visible";
             } else {
-                initiateSeal();
+                nextBtn.style.visibility = "hidden";
             }
         }
 
-        function initiateSeal() { 
-            const exitP = document.getElementById('exit-prompt');
-            exitP.style.opacity = "1";
-            document.getElementById('journal-view').classList.remove('active');
-            setTimeout(() => {
-                exitP.style.opacity = "0";
-                if(currentMood === 'void') bookData.void = [""]; 
+        function changePage(dir) {
+            currentPage += dir;
+            updatePageUI();
+        }
+
+        function updatePageUI() {
+            const input = document.getElementById('text-input');
+            input.value = bookData[currentMood][currentPage];
+            document.getElementById('pg-count').innerText = `PAGE ${currentPage + 1} / 444`;
+            document.getElementById('active-page').style.backgroundColor = `var(--page-${currentMood})`;
+            document.getElementById('prev-btn').style.visibility = currentPage > 0 ? "visible" : "hidden";
+            document.getElementById('star-btn').innerText = isStarred(currentMood, currentPage) ? "✦" : "✧";
+            handleTyping();
+        }
+
+        function toggleStar() {
+            const index = starredThoughts.findIndex(s => s.mood === currentMood && s.page === currentPage);
+            if(index > -1) {
+                starredThoughts.splice(index, 1);
+            } else if(bookData[currentMood][currentPage].trim() !== "") {
+                starredThoughts.push({ mood: currentMood, page: currentPage, text: bookData[currentMood][currentPage] });
+            }
+            updatePageUI();
+        }
+
+        function isStarred(m, p) { return starredThoughts.some(s => s.mood === m && s.page === p); }
+
+        function showStarArchive() {
+            const container = document.getElementById('star-list-container');
+            container.innerHTML = starredThoughts.length ? "" : "<p style='opacity:0.3; font-size:0.7rem;'>No stars recorded.</p>";
+            starredThoughts.forEach(s => {
+                const item = document.createElement('div');
+                item.className = 'star-item';
+                item.innerHTML = `<p class="star-preview">"${s.text}"</p><p class="star-meta">${s.mood} • Page ${s.page + 1}</p>`;
+                item.onclick = () => { closeStarArchive(); openDiary(s.mood, s.page); };
+                container.appendChild(item);
+            });
+            switchView('library-view', 'star-archive-view');
+        }
+
+        function sealExit() {
+            if(currentMood === 'void') {
+                showPopup("Are you certain? The Void destroys all evidence.", 'finalSeal');
+            } else {
                 switchView('journal-view', 'library-view');
-            }, 2000);
+            }
         }
 
         function switchView(from, to) {
             const f = document.getElementById(from); const t = document.getElementById(to);
-            f.style.opacity = '0';
-            setTimeout(() => { f.style.display = 'none'; t.style.display = 'flex'; void t.offsetWidth; t.style.opacity = '1'; }, 600);
+            if(f) { f.style.opacity = '0'; setTimeout(() => f.style.display = 'none', 500); }
+            t.style.display = 'flex'; setTimeout(() => t.style.opacity = '1', 50);
         }
 
         function showPopup(text, action) {
@@ -242,22 +240,15 @@
 
         function handlePopupAction(confirmed) {
             const p = document.getElementById('exaltis-popup');
-            p.style.opacity = "0";
-            setTimeout(() => {
-                p.style.display = 'none';
-                if(confirmed) {
-                    if(window.pendingAction === 'enterLibrary') switchView('audit-view', 'library-view');
-                    if(window.pendingAction === 'enterVoid') openDiary('void');
-                    if(window.pendingAction === 'finalSeal') initiateSeal();
-                } else {
-                    document.getElementById('cloud-overlay').classList.remove('active');
-                }
-            }, 300);
+            p.style.opacity = "0"; setTimeout(() => p.style.display = 'none', 400);
+            if(confirmed) {
+                if(window.pendingAction === 'enterLibrary') switchView('audit-view', 'library-view');
+                if(window.pendingAction === 'enterVoid') openDiary('void');
+                if(window.pendingAction === 'finalSeal') { bookData.void = [""]; switchView('journal-view', 'library-view'); }
+            }
         }
 
-        function resetAndReturn() {
-            switchView('library-view', 'audit-view');
-        }
+        function closeStarArchive() { switchView('star-archive-view', 'library-view'); }
     </script>
 </body>
 </html>
